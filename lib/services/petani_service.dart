@@ -5,9 +5,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:petani_30/models/errorMSG.dart';
-import 'package:petani_30/models/kelompok.dart';
-import 'package:petani_30/models/petani.dart';
+import 'package:petani_30/models/erorrmsg.dart';
+import 'package:petani_30/models/kelompok_tani_model.dart';
+import 'package:petani_30/models/petani_model.dart';
+import 'package:petani_30/models/petani_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class APiService {
@@ -139,7 +140,7 @@ request.fields['status'] = petani.status!;
   }
 
   // get kelompok petani
-  static Future<List<Kelompok>> getKelompokTani() async {
+  static Future<List<KelompokPetani>> getKelompokTani() async {
     try {
       final response =
           await http.get(Uri.parse("$host/api/kelompoktani"), headers: {
@@ -149,7 +150,7 @@ request.fields['status'] = petani.status!;
         var json = jsonDecode(response.body);
         final parsed = json.cast<Map<String, dynamic>>();
         return parsed
-            .map<Kelompok>((json) => Kelompok.fromJson(json))
+            .map<KelompokPetani>((json) => KelompokPetani.fromJson(json))
             .toList();
       } else {
         return [];
@@ -203,6 +204,6 @@ request.fields['status'] = petani.status!;
       // return responseRequest;
       print(e);
       throw Exception('Error $e');
-}
-}
+    }
+  }
 }
